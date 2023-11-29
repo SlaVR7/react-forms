@@ -50,3 +50,24 @@ h1 {
 .accept-container {
   margin-bottom: 30px;
 }
+
+.warning {
+  color: red;
+}
+
+.countries-label {
+  position: relative;
+}
+
+.countries-container {
+  position: absolute;
+  top: 22px;
+  max-height: 400px;
+  overflow: auto;
+  background-color: lightgray;
+}
+
+.country:hover {
+  background-color: aqua;
+  cursor: pointer;
+}

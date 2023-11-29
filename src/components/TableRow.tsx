@@ -17,14 +17,29 @@ export const dataFields = [
   { label: 'Country', key: 'country' },
 ];
 
+function isBase64(str: string | null) {
+  if (str) {
+    const base64Regex = /^data:[A-Za-z0-9+/]+;base64,([A-Za-z0-9+/]|=(?![^"]))/;
+    return base64Regex.test(str);
+  }
+}
+
 export const TableRow = ({
   label,
   uncontrolledData,
   controlledData,
-}: tableRow) => (
-  <tr>
-    <td>{label}:</td>
-    <td>{uncontrolledData}</td>
-    <td>{controlledData}</td>
-  </tr>
-);
+}: tableRow) => {
+  return (
+    <tr>
+      <td>{label}:</td>
+      {uncontrolledData && isBase64(uncontrolledData) ? (
+        <td>
+          <img src={uncontrolledData} alt="uploaded image" width={'200px'} />
+        </td>
+      ) : (
+        <td>{uncontrolledData}</td>
+      )}
+      <td>{controlledData}</td>
+    </tr>
+  );
+};
