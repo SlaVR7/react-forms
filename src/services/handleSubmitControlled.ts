@@ -8,8 +8,14 @@ import {
   setName,
   setPassword,
 } from '../redux/reducers/cardsSlice';
+import { IHandleSubmitControlled } from '../lib/types/interfaces';
 
-export function handleSubmitControlled(data, dispatch, navigate, file) {
+export function handleSubmitControlled({
+  data,
+  dispatch,
+  navigate,
+  file,
+}: IHandleSubmitControlled) {
   const reader = new FileReader();
   reader.onload = (event) => {
     const base64Image = event.target?.result;

@@ -64,7 +64,6 @@ export function handleSubmitUncontrolled({
         errors[error.path!] = error.message;
       });
       setValidationErrors(errors);
-      console.error(e.errors);
     });
 
   reader.onload = (event) => {

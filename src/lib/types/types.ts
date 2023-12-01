@@ -18,6 +18,15 @@ export type HandleSubmit = {
   countries: string[];
 };
 
+export type FileInput = {
+  new (
+    fileBits: BlobPart[],
+    fileName: string,
+    options?: FilePropertyBag | undefined
+  ): File;
+  prototype: File;
+};
+
 export type ValidFieldNames =
   | 'name'
   | 'age'
@@ -27,6 +36,4 @@ export type ValidFieldNames =
   | 'accept'
   | 'file'
   | 'country'
-  | 'confirmPassword'
-  | 'male'
-  | 'female';
+  | 'confirmPassword';

@@ -9,15 +9,17 @@ import { GenderContainer } from '../components/inputContainers/uncontrolled/Gend
 import { AcceptContainer } from '../components/inputContainers/uncontrolled/AcceptContainer';
 import { CountryContainer } from '../components/inputContainers/uncontrolled/CountryContainer';
 import { Header } from '../components/Header';
+import { RootState } from '../redux/store';
 
 export function Uncontrolled() {
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {}
   );
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const dispatch = useDispatch();
   const refs = useCustomRefs();
   const navigate = useNavigate();
-  const countries = useSelector((state) => state.countriesSlice);
+  const countries = useSelector((state: RootState) => state.countriesSlice);
 
   return (
     <>
@@ -25,7 +27,7 @@ export function Uncontrolled() {
       <div className="form-wrapper">
         <h1>Uncontrolled page</h1>
         <form
-          onSubmit={(event) =>
+          onSubmit={(event) => {
             handleSubmitUncontrolled({
               event,
               refs,
@@ -33,8 +35,9 @@ export function Uncontrolled() {
               dispatch,
               navigate,
               countries,
-            })
-          }
+            });
+            setIsSubmitted(true);
+          }}
           noValidate={true}
         >
           <InputContainer
@@ -60,6 +63,7 @@ export function Uncontrolled() {
             validationErrors={validationErrors.password}
             fieldName={'Password'}
             type="password"
+            isSubmitted={isSubmitted}
           />
           <InputContainer
             refs={refs.confirmPassword}

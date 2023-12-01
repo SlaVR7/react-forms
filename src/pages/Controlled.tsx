@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { validationSchema } from '../services/validationSchema';
@@ -9,21 +9,23 @@ import { filterCountries } from '../services/filterCountries';
 import { handleSubmitControlled } from '../services/handleSubmitControlled';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
+import { RootState } from '../redux/store';
+import { IResolver } from '../lib/types/interfaces';
 
 export function Controlled() {
-  const countries = useSelector((state) => state.countriesSlice);
+  const countries = useSelector((state: RootState) => state.countriesSlice);
   const [inputValue, setInputValue] = useState('');
   const [filteredCountries, setFilteredCountries] = useState(['']);
   const [isCountriesListOpen, setIsCountriesListOpen] = useState(false);
   const [countryValue, setCountryValue] = useState('');
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File>();
   const {
     register,
     setValue,
     watch,
     handleSubmit,
     formState: { errors, isValid, isDirty },
-  } = useForm({
+  } = useForm<IResolver>({
     mode: 'onChange',
     resolver: yupResolver(validationSchema(countries)),
     defaultValues: defaultInputsValues,
@@ -44,13 +46,13 @@ export function Controlled() {
     if (file) {
       setValue('file', file, { shouldValidate: true });
     } else {
-      setValue('file', file, { shouldValidate: false });
+      setValue('file', file!, { shouldValidate: false });
     }
   }, [file]);
 
-  function onSubmit(data) {
-    handleSubmitControlled(data, dispatch, navigate, file);
-  }
+  const onSubmit: SubmitHandler<IResolver> = (data) => {
+    handleSubmitControlled({ data, dispatch, navigate, file });
+  };
 
   return (
     <>
@@ -63,30 +65,35 @@ export function Controlled() {
             register={register}
             errors={errors.name?.message}
             type="text"
+            setValue={setValue}
           />
           <ControlledInput
             fieldName="Age"
             register={register}
             errors={errors.age?.message}
             type="number"
+            setValue={setValue}
           />
           <ControlledInput
             fieldName="Email"
             register={register}
             errors={errors.email?.message}
             type="email"
+            setValue={setValue}
           />
           <ControlledInput
             fieldName="Password"
             register={register}
             errors={errors.password?.message}
             type="password"
+            setValue={setValue}
           />
           <ControlledInput
             fieldName="Confirm password"
             register={register}
             errors={errors.confirmPassword?.message}
             type="password"
+            setValue={setValue}
           />
           {/*<GenderContainer validationErrors={errors.gender?.message} />*/}
           <div className="gender-container">
@@ -153,7 +160,7 @@ export function Controlled() {
               <input
                 type="file"
                 onChange={(e) => {
-                  setFile(e.target.files[0]);
+                  if (e.target.files) setFile(e.target.files[0]);
                 }}
               />
             </div>

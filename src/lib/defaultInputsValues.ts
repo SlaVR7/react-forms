@@ -1,11 +1,11 @@
 export const defaultInputsValues = {
   name: '',
-  age: '',
+  age: undefined,
   email: '',
   password: '',
   confirmPassword: '',
-  gender: '',
-  file: File,
+  gender: undefined,
+  file: undefined,
   country: '',
   accept: false,
 };

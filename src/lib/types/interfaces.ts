@@ -1,5 +1,7 @@
 import { RefObject } from 'react';
-import { UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { Dispatch } from '@reduxjs/toolkit';
+import { NavigateFunction } from 'react-router-dom';
 
 export interface Refs {
   name: RefObject<HTMLInputElement>;
@@ -33,13 +35,15 @@ export interface IInputContainer {
   validationErrors: string | undefined;
   fieldName: string;
   type: string;
+  isSubmitted?: boolean;
 }
 
 export interface IControlledInputContainer {
   fieldName: string;
-  register: UseFormRegister<ValidationErrors>;
+  register: UseFormRegister<IResolver>;
   errors: string | undefined;
   type: string;
+  setValue: UseFormSetValue<IResolver>;
 }
 
 export interface IRefsValidation {
@@ -51,11 +55,30 @@ export interface IRefsValidation {
 
 export interface IInitialState {
   name: string[];
-  age: string[];
+  age: number[];
   email: string[];
   password: string[];
   gender: string[];
   accept: string[];
   file: string[];
   country: string[];
+}
+
+export interface IHandleSubmitControlled {
+  data: IResolver;
+  dispatch: Dispatch;
+  navigate: NavigateFunction;
+  file: File | undefined;
+}
+
+export interface IResolver {
+  age?: number | undefined;
+  accept?: boolean;
+  name: string;
+  email: string;
+  password: string;
+  gender: NonNullable<'male' | 'female' | undefined>;
+  file: File;
+  country: string;
+  confirmPassword: string;
 }
