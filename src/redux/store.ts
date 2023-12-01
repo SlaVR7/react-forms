@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import uncontrolledSlice from './reducers/uncontrolledSlice';
 import countriesSlice from '../redux/reducers/countriesSlice';
+import cardsSlice from './reducers/cardsSlice';
 
 const rootReducer = combineReducers({
   countriesSlice,
-  uncontrolledSlice,
+  cardsSlice,
 });
 
 export const store = configureStore({

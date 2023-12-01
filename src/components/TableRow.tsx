@@ -39,7 +39,13 @@ export const TableRow = ({
       ) : (
         <td>{uncontrolledData}</td>
       )}
-      <td>{controlledData}</td>
+      {controlledData && isBase64(controlledData) ? (
+        <td>
+          <img src={controlledData} alt="uploaded image" width={'200px'} />
+        </td>
+      ) : (
+        <td>{controlledData}</td>
+      )}
     </tr>
   );
 };

@@ -27,7 +27,7 @@ h1 {
   text-align: center;
 }
 
-.uncontrolled-wrapper {
+.form-wrapper {
   width: 500px;
   margin: 0 auto;
 }
@@ -61,7 +61,7 @@ h1 {
 
 .countries-container {
   position: absolute;
-  top: 22px;
+  top: 42px;
   max-height: 400px;
   overflow: auto;
   background-color: lightgray;
@@ -70,4 +70,23 @@ h1 {
 .country:hover {
   background-color: aqua;
   cursor: pointer;
+}
+
+.picture {
+  width: 300px;
+}
+
+.card-container {
+  width: 350px;
+  background-color: grey;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.border {
+  border: 5px solid red;
 }
