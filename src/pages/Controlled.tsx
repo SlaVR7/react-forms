@@ -1,23 +1,23 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { validationSchema } from '../services/validationSchema';
-import { ControlledInput } from '../components/inputContainers/controlled/ControlledInput';
+import { ControlledText } from '../components/inputContainers/controlled/ControlledText';
 import { defaultInputsValues } from '../lib/defaultInputsValues';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterCountries } from '../services/filterCountries';
 import { handleSubmitControlled } from '../services/handleSubmitControlled';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { RootState } from '../redux/store';
 import { IResolver } from '../lib/types/interfaces';
+import { Gender } from '../components/inputContainers/Gender';
+import { Accept } from '../components/inputContainers/Accept';
+import { ControlledFile } from '../components/inputContainers/controlled/ControlledFile';
+import { ControlledCountry } from '../components/inputContainers/controlled/ControlledCountry';
 
 export function Controlled() {
   const countries = useSelector((state: RootState) => state.countriesSlice);
-  const [inputValue, setInputValue] = useState('');
-  const [filteredCountries, setFilteredCountries] = useState(['']);
-  const [isCountriesListOpen, setIsCountriesListOpen] = useState(false);
-  const [countryValue, setCountryValue] = useState('');
+
   const [file, setFile] = useState<File>();
   const {
     register,
@@ -32,24 +32,6 @@ export function Controlled() {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    filterCountries({ countries, inputValue, setFilteredCountries });
-    if (inputValue === '') {
-      setValue('country', inputValue, { shouldValidate: false });
-    } else {
-      setValue('country', inputValue, { shouldValidate: true });
-    }
-  }, [inputValue, countryValue]);
-
-  useEffect(() => {
-    if (file) {
-      setValue('file', file, { shouldValidate: true });
-    } else {
-      setValue('file', file!, { shouldValidate: false });
-    }
-  }, [file]);
-
   const onSubmit: SubmitHandler<IResolver> = (data) => {
     handleSubmitControlled({ data, dispatch, navigate, file });
   };
@@ -60,160 +42,65 @@ export function Controlled() {
       <div className="form-wrapper">
         <h1>Controlled page</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <ControlledInput
+          <ControlledText
             fieldName="Name"
             register={register}
             errors={errors.name?.message}
             type="text"
             setValue={setValue}
           />
-          <ControlledInput
+          <ControlledText
             fieldName="Age"
             register={register}
             errors={errors.age?.message}
             type="number"
             setValue={setValue}
           />
-          <ControlledInput
+          <ControlledText
             fieldName="Email"
             register={register}
             errors={errors.email?.message}
             type="email"
             setValue={setValue}
           />
-          <ControlledInput
+          <ControlledText
             fieldName="Password"
             register={register}
             errors={errors.password?.message}
             type="password"
             setValue={setValue}
           />
-          <ControlledInput
+          <ControlledText
             fieldName="Confirm password"
             register={register}
             errors={errors.confirmPassword?.message}
             type="password"
             setValue={setValue}
           />
-          {/*<GenderContainer validationErrors={errors.gender?.message} />*/}
-          <div className="gender-container">
-            <div>Gender: </div>
-            <div>
-              {errors && (
-                <div className="warning">{errors.gender?.message}</div>
-              )}
-              <div>
-                <input
-                  type="radio"
-                  id="male"
-                  name="gender"
-                  value="male"
-                  onClick={() => setValue('gender', 'male')}
-                />
-                <label className="inline-label" htmlFor="male">
-                  Male
-                </label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="female"
-                  name="gender"
-                  value="female"
-                  onClick={() => setValue('gender', 'female')}
-                />
-                <label className="inline-label" htmlFor="female">
-                  Female
-                </label>
-              </div>
-            </div>
-          </div>
-          {/*<AcceptContainer*/}
-          {/*  validationErrors={errors.accept?.message}*/}
-          {/*  setValue={setValue}*/}
-          {/*/>*/}
-          <div className="accept-container">
-            <div>
-              {errors && (
-                <div className="warning">{errors.accept?.message}</div>
-              )}
-              <input
-                {...register('accept')}
-                type="checkbox"
-                name="accept"
-                id="accept"
-                onChange={() =>
-                  setValue('accept', !watch('accept'), { shouldValidate: true })
-                }
-              />
-              <label className="inline-label" htmlFor="accept">
-                accept T&C
-              </label>
-            </div>
-          </div>
-          <label>
-            <div>Upload picture:</div>
-            <div>
-              {errors.file && (
-                <div className="warning">{errors.file?.message}</div>
-              )}
-              <input
-                type="file"
-                onChange={(e) => {
-                  if (e.target.files) setFile(e.target.files[0]);
-                }}
-              />
-            </div>
-          </label>
-          {/*<CountryContainer*/}
-          {/*  validationErrors={errors.country?.message}*/}
-          {/*  setValue={setValue}*/}
-          {/*  register={register}*/}
-          {/*/>*/}
-          <label htmlFor="country" className="countries-label">
-            <div>Country:</div>
-            <div>
-              {isCountriesListOpen && (
-                <div
-                  onClick={(event) => {
-                    const clickedElement = event.target as HTMLDivElement;
-                    setInputValue(clickedElement.textContent || '');
-                  }}
-                  className="countries-container"
-                >
-                  {filteredCountries.map((country) => {
-                    return (
-                      <div className="country" key={country}>
-                        {country}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-              {errors && (
-                <div className="warning">{errors.country?.message}</div>
-              )}
-              <input
-                type="text"
-                id="country"
-                value={inputValue}
-                {...register('country')}
-                onChange={(event) => {
-                  const inputValue = event.target.value;
-                  const inputValueCapitalize =
-                    inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1);
-                  setCountryValue(event.target.value);
-                  setInputValue(inputValueCapitalize);
-                  setIsCountriesListOpen(true);
-                }}
-                onClick={() => setIsCountriesListOpen(!isCountriesListOpen)}
-              />
-            </div>
-          </label>
-          <button
-            type="submit"
-            disabled={!isDirty || !isValid} //Object.keys(errors).length > 0
-          >
+          <Gender
+            validationErrors={errors.gender?.message}
+            register={register}
+            setValue={setValue}
+          />
+          <Accept
+            validationErrors={errors.accept?.message}
+            register={register}
+            setValue={setValue}
+            watch={watch}
+          />
+          <ControlledFile
+            errors={errors.file?.message}
+            setValue={setValue}
+            file={file}
+            setFile={setFile}
+          />
+          <ControlledCountry
+            errors={errors.country?.message}
+            setValue={setValue}
+            register={register}
+            countries={countries}
+          />
+          <button type="submit" disabled={!isDirty || !isValid}>
             Submit
           </button>
         </form>

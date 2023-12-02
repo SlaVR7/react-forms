@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useCustomRefs from '../lib/refs';
 import { handleSubmitUncontrolled } from '../services/handleSubmitUncontrolled';
-import { InputContainer } from '../components/inputContainers/uncontrolled/InputContainer';
+import { UncontrolledText } from '../components/inputContainers/uncontrolled/UncontrolledText';
 import { ValidationErrors } from '../lib/types/interfaces';
-import { GenderContainer } from '../components/inputContainers/uncontrolled/GenderContainer';
-import { AcceptContainer } from '../components/inputContainers/uncontrolled/AcceptContainer';
-import { CountryContainer } from '../components/inputContainers/uncontrolled/CountryContainer';
+import { Gender } from '../components/inputContainers/Gender';
+import { Accept } from '../components/inputContainers/Accept';
+import { UncontrolledCountry } from '../components/inputContainers/uncontrolled/UncontrolledCountry';
 import { Header } from '../components/Header';
 import { RootState } from '../redux/store';
 
@@ -40,52 +40,46 @@ export function Uncontrolled() {
           }}
           noValidate={true}
         >
-          <InputContainer
+          <UncontrolledText
             refs={refs.name}
             validationErrors={validationErrors.name}
             fieldName={'Name'}
             type="text"
           />
-          <InputContainer
+          <UncontrolledText
             refs={refs.age}
             validationErrors={validationErrors.age}
             fieldName={'Age'}
             type="number"
           />
-          <InputContainer
+          <UncontrolledText
             refs={refs.email}
             validationErrors={validationErrors.email}
-            fieldName={'E-mail'}
+            fieldName={'Email'}
             type="email"
           />
-          <InputContainer
+          <UncontrolledText
             refs={refs.password}
             validationErrors={validationErrors.password}
             fieldName={'Password'}
             type="password"
             isSubmitted={isSubmitted}
           />
-          <InputContainer
+          <UncontrolledText
             refs={refs.confirmPassword}
             validationErrors={validationErrors.confirmPassword}
             fieldName={'Confirm password:'}
             type="password"
           />
-          <GenderContainer
-            refs={refs}
-            validationErrors={validationErrors.gender}
-          />
-          <AcceptContainer
-            refs={refs}
-            validationErrors={validationErrors.accept}
-          />
-          <InputContainer
+          <Gender refs={refs} validationErrors={validationErrors.gender} />
+          <Accept refs={refs} validationErrors={validationErrors.accept} />
+          <UncontrolledText
             refs={refs.file}
             validationErrors={validationErrors.file}
             fieldName={'Upload picture'}
             type="file"
           />
-          <CountryContainer
+          <UncontrolledCountry
             refs={refs}
             validationErrors={validationErrors.country}
           />

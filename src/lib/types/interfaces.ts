@@ -1,5 +1,9 @@
-import { RefObject } from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import React, { RefObject } from 'react';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 import { Dispatch } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
 
@@ -49,8 +53,9 @@ export interface IControlledInputContainer {
 export interface IRefsValidation {
   refs?: Refs;
   validationErrors: string | undefined;
-  setValue?: () => void;
-  register?: UseFormRegister<ValidationErrors>;
+  setValue?: UseFormSetValue<IResolver>;
+  register?: UseFormRegister<IResolver>;
+  watch?: UseFormWatch<IResolver>;
 }
 
 export interface IInitialState {
@@ -81,4 +86,18 @@ export interface IResolver {
   file: File;
   country: string;
   confirmPassword: string;
+}
+
+export interface IFileContainer {
+  errors: string | undefined;
+  setValue: UseFormSetValue<IResolver>;
+  file: File | undefined;
+  setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+}
+
+export interface ICountriesContainer {
+  errors: string | undefined;
+  setValue: UseFormSetValue<IResolver>;
+  register: UseFormRegister<IResolver>;
+  countries: string[];
 }

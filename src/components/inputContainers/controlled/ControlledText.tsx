@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { IControlledInputContainer } from '../../../lib/types/interfaces';
 import { ValidFieldNames } from '../../../lib/types/types';
 
-export function ControlledInput({
+export function ControlledText({
   fieldName,
   register,
   errors,
@@ -21,14 +21,20 @@ export function ControlledInput({
     setValue(registerParams, value, { shouldValidate: true });
   };
 
+  let passwordStrength: string | undefined;
+  if (errors) {
+    passwordStrength = 'Password is weak';
+  } else if (!errors && inputValue !== '') {
+    passwordStrength = 'Password is strength';
+  }
+
   return (
     <label>
-      <div>{fieldName}:</div>
+      <div className="field-name">{fieldName}:</div>
       <div>
-        {errors && <div className="warning">{errors}</div>}
-        {fieldName === 'Password' && errors && <div>Password is weak</div>}
-        {fieldName === 'Password' && !errors && inputValue !== '' && (
-          <div> Password is strength</div>
+        <div className="warning">{errors}</div>
+        {fieldName === 'Password' && (
+          <div className="password-strength">{passwordStrength}</div>
         )}
         <input
           type={type}

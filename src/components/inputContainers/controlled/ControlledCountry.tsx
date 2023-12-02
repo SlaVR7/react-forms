@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { filterCountries } from '../../../services/filterCountries';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { IRefsValidation } from '../../../lib/types/interfaces';
+import { ICountriesContainer } from '../../../lib/types/interfaces';
 
-export function CountryContainer({ refs, validationErrors }: IRefsValidation) {
-  const [inputValue, setInputValue] = useState('');
+export function ControlledCountry({
+  errors,
+  setValue,
+  register,
+  countries,
+}: ICountriesContainer) {
   const [filteredCountries, setFilteredCountries] = useState(['']);
   const [isCountriesListOpen, setIsCountriesListOpen] = useState(false);
-  const countries = useSelector((state: RootState) => state.countriesSlice);
+  const [countryValue, setCountryValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     filterCountries({ countries, inputValue, setFilteredCountries });
-  }, [inputValue]);
+    if (inputValue === '') {
+      setValue('country', inputValue, { shouldValidate: false });
+    } else {
+      setValue('country', inputValue, { shouldValidate: true });
+    }
+  }, [inputValue, countryValue]);
 
   return (
     <label htmlFor="country" className="countries-label">
-      <div>Country:</div>
+      <div className="field-name">Country:</div>
       <div>
         {isCountriesListOpen && (
           <div
@@ -35,21 +43,22 @@ export function CountryContainer({ refs, validationErrors }: IRefsValidation) {
             })}
           </div>
         )}
+        <div className={errors ? 'warning' : 'empty-warning'}>{errors}</div>
         <input
-          ref={refs?.country}
           type="text"
           id="country"
           value={inputValue}
+          {...register('country')}
           onChange={(event) => {
             const inputValue = event.target.value;
             const inputValueCapitalize =
               inputValue.slice(0, 1).toUpperCase() + inputValue.slice(1);
+            setCountryValue(event.target.value);
             setInputValue(inputValueCapitalize);
             setIsCountriesListOpen(true);
           }}
           onClick={() => setIsCountriesListOpen(!isCountriesListOpen)}
         />
-        {validationErrors && <div className="warning">{validationErrors}</div>}
       </div>
     </label>
   );

@@ -29,13 +29,34 @@ export function Main() {
         <li>
           <img className="picture" src={cardsData.file[i]} alt="photo" />
         </li>
-        <li>Name: {cardsData.name[i]}</li>
-        <li>Age: {cardsData.age[i]}</li>
-        <li>E-mail: {cardsData.email[i]}</li>
-        <li>Password: {cardsData.password[i]}</li>
-        <li>Gender: {cardsData.password[i]}</li>
-        <li>Accept T&C: {cardsData.password[i]}</li>
-        <li>Country: {cardsData.country[i]}</li>
+        <li>
+          <span className="bold">Name: </span>
+          {cardsData.name[i]}
+        </li>
+        <li>
+          <span className="bold">Age: </span>
+          {cardsData.age[i]}
+        </li>
+        <li>
+          <span className="bold">E-mail: </span>
+          {cardsData.email[i]}
+        </li>
+        <li>
+          <span className="bold">Password: </span>
+          {cardsData.password[i]}
+        </li>
+        <li>
+          <span className="bold">Gender: </span>
+          {cardsData.gender[i]}
+        </li>
+        <li>
+          <span className="bold">Accept T&C: </span>
+          {cardsData.accept[i]}
+        </li>
+        <li>
+          <span className="bold">Country: </span>
+          {cardsData.country[i]}
+        </li>
       </ul>
     );
     cards.unshift(card);

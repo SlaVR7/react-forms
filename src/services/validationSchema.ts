@@ -5,52 +5,52 @@ export const validationSchema = (countries: string[]) =>
     name: yup
       .string()
       .required()
-      .matches(/^[А-ЯA-Z]/, 'First letter must be capitalize'),
+      .matches(/^[А-ЯA-Z]/, 'first letter must be capitalize'),
     age: yup
       .number()
-      .typeError('Enter you age!')
-      .positive('Age must be a positive number!'),
+      .typeError('enter you age')
+      .positive('age must be a positive'),
     email: yup
       .string()
       .required()
-      .email('Email is not valid!')
+      .email('email is not valid')
       .matches(
         /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-        'Email is not valid!'
+        'email is not valid'
       ),
     password: yup
       .string()
       .matches(
         /^(?=.*[а-яa-z])/,
-        'Password must contains at least one lowercase letter'
+        'password must contains at least one lowercase letter'
       )
       .matches(
         /(?=.*[А-ЯA-Z])/,
-        'Password must contains at least one uppercase letter'
+        'password must contains at least one uppercase letter'
       )
-      .matches(/(?=.*\d)/, 'Password must contains at least one number')
+      .matches(/(?=.*\d)/, 'password must contains at least one number')
       .matches(
         /(?=.*[@$!();-=№#"%*?&])/,
-        'Password must contains at least one special character'
+        'password must contains at least one special character'
       )
       .required(),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), undefined], 'Passwords must match')
-      .required('Confirm Password is required'),
+      .oneOf([yup.ref('password'), undefined], 'passwords must match')
+      .required('confirm password is required'),
     gender: yup
       .string()
-      .oneOf(['male', 'female'], 'Please select a valid gender')
-      .required('Gender is required'),
+      .oneOf(['male', 'female'], 'please select a valid gender')
+      .required('gender is required'),
     accept: yup
       .boolean()
-      .oneOf([true], 'You must accept the terms and conditions'),
+      .oneOf([true], 'you must accept the terms and conditions'),
     file: yup
       .mixed<File>()
-      .required('File is required')
+      .required('file is required')
       .test(
         'fileFormat',
-        'File must be a valid image (jpeg or png)',
+        'file must be a valid image (jpeg or png)',
         (value) => {
           if (!value) return true;
 
@@ -58,7 +58,7 @@ export const validationSchema = (countries: string[]) =>
           return acceptedFormats.includes(value.type);
         }
       )
-      .test('fileSize', 'File size must be less than 500 KB', (value) => {
+      .test('fileSize', 'file size must be less than 500 KB', (value) => {
         if (!value) return true;
 
         const maxSizeInBytes = 500 * 1024;
