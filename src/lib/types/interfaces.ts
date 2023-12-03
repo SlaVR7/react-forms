@@ -60,7 +60,7 @@ export interface IRefsValidation {
 
 export interface IInitialState {
   name: string[];
-  age: number[];
+  age: string[];
   email: string[];
   password: string[];
   gender: string[];
@@ -77,7 +77,7 @@ export interface IHandleSubmitControlled {
 }
 
 export interface IResolver {
-  age?: number | undefined;
+  age: string;
   accept?: boolean;
   name: string;
   email: string;

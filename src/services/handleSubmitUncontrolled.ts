@@ -1,4 +1,3 @@
-import { validationSchema } from './validationSchema';
 import {
   setAccept,
   setAge,
@@ -11,6 +10,7 @@ import {
 } from '../redux/reducers/cardsSlice';
 import * as yup from 'yup';
 import { HandleSubmit } from '../lib/types/types';
+import { uncontrolledSchema } from './uncontrolledSchema';
 
 export function handleSubmitUncontrolled({
   event,
@@ -44,8 +44,9 @@ export function handleSubmitUncontrolled({
     file: file,
     country: refs.country.current?.value,
   };
+  console.log(formData);
 
-  validationSchema(countries)
+  uncontrolledSchema(countries)
     .validate(formData, { abortEarly: false })
     .then(() => {
       setValidationErrors({});

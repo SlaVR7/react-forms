@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
-import { validationSchema } from '../services/validationSchema';
+import { controlledSchema } from '../services/controlledSchema';
 import { ControlledText } from '../components/inputContainers/controlled/ControlledText';
 import { defaultInputsValues } from '../lib/defaultInputsValues';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +27,7 @@ export function Controlled() {
     formState: { errors, isValid, isDirty },
   } = useForm<IResolver>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema(countries)),
+    resolver: yupResolver(controlledSchema(countries)),
     defaultValues: defaultInputsValues,
   });
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ export function Controlled() {
             fieldName="Age"
             register={register}
             errors={errors.age?.message}
-            type="number"
+            type="text"
             setValue={setValue}
           />
           <ControlledText

@@ -5,7 +5,7 @@ export function UncontrolledText({
   refs,
   validationErrors,
   fieldName,
-  type = 'text',
+  type,
   isSubmitted,
 }: IInputContainer) {
   const [inputValue, setInputValue] = useState('');

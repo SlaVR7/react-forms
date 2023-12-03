@@ -50,7 +50,7 @@ export function Uncontrolled() {
             refs={refs.age}
             validationErrors={validationErrors.age}
             fieldName={'Age'}
-            type="number"
+            type="text"
           />
           <UncontrolledText
             refs={refs.email}
