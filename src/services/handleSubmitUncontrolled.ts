@@ -44,7 +44,6 @@ export function handleSubmitUncontrolled({
     file: file,
     country: refs.country.current?.value,
   };
-  console.log(formData);
 
   uncontrolledSchema(countries)
     .validate(formData, { abortEarly: false })
